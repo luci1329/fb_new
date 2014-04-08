@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *user7;
 
 
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @property NSMutableArray* circlePoints;
 @property (nonatomic) NSMutableArray* btnarray;

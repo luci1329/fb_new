@@ -4,7 +4,7 @@
 //
 //  Created by luci on 10/13/13.
 //  Copyright (c) 2013 luci. All rights reserved.
-//
+//  TBD
 
 #import "TwitterViewController.h"
 #import <Social/Social.h>
@@ -75,9 +75,7 @@
          }
      }];
 }
--(void)getFacebookFriends
-{
-}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString *CellIdentifier = @"Cell";
@@ -100,7 +98,7 @@
     if (!label)
         label = (UILabel*)[cell viewWithTag:1];
     
-    [label setText:[NSString stringWithFormat:@"%d.%@",indexPath.row+1,currentCellText]];
+    [label setText:[NSString stringWithFormat:@"%ld.%@",indexPath.row+1,currentCellText]];
     [label setFrame:CGRectMake(CELL_CONTENT_MARGIN, CELL_CONTENT_MARGIN, CELL_CONTENT_WIDTH - (CELL_CONTENT_MARGIN * 2), MAX(constraint.height, 44.0f))];
     
     return cell;

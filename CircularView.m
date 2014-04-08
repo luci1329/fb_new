@@ -29,7 +29,6 @@
     self.animatedDownRight = NO;
     self.animatedUpLeft = NO;
     self.animatedUpRight = NO;
-    //self.contentMode = UIViewContentModeRedraw;
 }
 -(void)awakeFromNib
 {
@@ -84,10 +83,11 @@
 -(NSMutableArray*)createButtons
 {
     self.btnarray = [[NSMutableArray alloc]
-                     initWithObjects:_user1,_user2,_user3,_user4,_user5,_user6,_user7, nil];
+                     initWithObjects:_user1,_user2,_user4,_user5,_user6,_user7, nil];
     [_btnarray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         UIButton * btn = obj;
         btn.alpha = 0;
+        btn.tag = idx;
     }];
     return _btnarray;
 }
@@ -327,10 +327,10 @@
 -(void)performRotation:(CGPoint)vel
 {
     if (fabsf(vel.x)>fabsf(vel.y)) {
-        [self animate:vel:fabsf(vel.x/15)];
+        [self animate:vel:fabsf(vel.x/20)];
     }
     else
-        [self animate:vel:fabsf(vel.y)/15];
+        [self animate:vel:fabsf(vel.y)/20];
 }
 
 - (void)drawRect:(CGRect)rect

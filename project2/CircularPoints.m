@@ -47,10 +47,10 @@
     }
     return angles;
 }
-+(void)rotate:(int)direction : (NSArray *) btnarray : (NSMutableArray*) angles :(CGPoint) centerPoint
++(void)rotate:(int)direction : (NSArray *) array : (NSMutableArray*) angles :(CGPoint) centerPoint
 {
-    [btnarray enumerateObjectsUsingBlock:^(id currentButton,NSUInteger pos,BOOL *stop){
-        UIButton* tmp = [btnarray objectAtIndex:pos];
+    [array enumerateObjectsUsingBlock:^(id currentButton,NSUInteger pos,BOOL *stop){
+        UIButton* tmp = [array objectAtIndex:pos];
         NSNumber * val = [angles objectAtIndex:pos];
         CGFloat alpha =  2*PI/360;
         CGFloat tetha;
@@ -68,7 +68,7 @@
             nextPoint.x = cosf(tetha)*100+centerPoint.x;
             nextPoint.y = sinf(tetha)*100+centerPoint.y;
             nextPoint = CGPointMake(nextPoint.x, nextPoint.y);
-            [tmp setCenter:CGPointMake(nextPoint.x, nextPoint.y)];
+            [tmp setCenter:nextPoint];
             val = [NSNumber numberWithFloat:tetha];;
             [angles setObject:val atIndexedSubscript:pos];
         }

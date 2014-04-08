@@ -40,7 +40,6 @@
     if (_circularView) {
         [self facebookInit];
         [self setup];
-        [self setupNavigationBar];
         [self setView:_circularView];
     }
 }
@@ -83,7 +82,8 @@
         }];
     }
 }
--(void)isLoggedIn {
+-(void)isLoggedIn
+{
     if (!FBSession.activeSession.isOpen) {
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Connection error" message:@"No facebook connection!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [self.navigationController popViewControllerAnimated:YES];
@@ -96,34 +96,35 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(isLoggedIn) userInfo:nil repeats:YES];
 }
 
-- (IBAction)logoutTapped:(id)sender {
+- (IBAction)logoutTapped:(id)sender
+{
     if (FBSession.activeSession.isOpen) {
         [[FBSession activeSession] closeAndClearTokenInformation];
         //[_circularView animateOut];
         [self.navigationController popViewControllerAnimated:YES];
     }
-    
 }
 
 -(void)setup
 {
     _circularView.centerPoint = CGPointMake(_circularView.center.x , _circularView.center.y);
     _circularView.circlePoints = [CircularPoints adjustCirclePoints:_circularView.centerPoint];
-    self.btnarray = [_circularView createButtons];
+    _btnarray = [_circularView createButtons];
     _circlePoints = _circularView.circlePoints;
     _circularView.btnarray = [self animateButtons];
     _circularView.angles = _angles;
     UIGestureRecognizer *panThis =[[UIPanGestureRecognizer alloc]initWithTarget:self.circularView action:@selector(pan:)];
     [self.circularView addGestureRecognizer:panThis];
+    [self setupNavigationBar];
 }
 
 
 -(NSMutableArray*)animateButtons
 {
-    self.hasAnimated = YES;
     [_btnarray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSValue * value = _circlePoints[(idx+1)*359/_btnarray.count];
         UIButton* btn =obj;
+        [btn setCenter:_circularView.centerPoint];
         btn.alpha = 0;
         CGPoint pt = value.CGPointValue;
         [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^(void)
@@ -135,77 +136,63 @@
                          }
          ];
     }];
-    self.angles = [CircularPoints findNextAngles:_btnarray.count
+    self.angles = [CircularPoints findNextAngles:(int)_btnarray.count
                                                 :_centerPoint];
+    self.hasAnimated = YES;
     return _btnarray;
-}
--(IBAction)friendsTapped:(id)sender
-{
-    /* This is just for friend picker
-    [UIView animateWithDuration:0.2 animations:^
-    {
-            _circularView.user1.transform = CGAffineTransformMakeScale(1.5, 1.5);
-            _circularView.user1.alpha = 0;
-        
-    } completion:^(BOOL finished) {
-        FBFriendPickerViewController *f_pick = [[FBFriendPickerViewController alloc] init];
-        [f_pick loadData];
-        [f_pick presentModallyFromViewController:self animated:YES handler:nil];
-        
-    }];
-    */
-    [self performSegueWithIdentifier:@"Friends" sender:sender];
-}
--(IBAction)photosTapped:(id)sender {
-    [self performSegueWithIdentifier:@"Photos" sender:sender];
 }
 -(IBAction)userFeedTapped:(id)sender
 {
     [self performSegueWithIdentifier:@"feedForFriend" sender:sender];
 }
-- (IBAction)likesTapped:(id)sender {
-    [self performSegueWithIdentifier:@"Likes" sender:sender];
+-(IBAction)loadTableViewWithSenderId:(id)sender
+{
+    [self performSegueWithIdentifier:@"populate" sender:sender];
 }
-- (IBAction)musicTapped:(id)sender {
-    [self performSegueWithIdentifier:@"Music" sender:sender];
-}
-- (IBAction)booksTapped:(id)sender {
-    [self performSegueWithIdentifier:@"Books" sender:sender];
-}
-- (IBAction)moviesTapped:(id)sender {
-    [self performSegueWithIdentifier:@"Movies" sender:sender];
-}
--(IBAction)viewProfile:(id)sender {
+-(IBAction)viewProfile:(id)sender
+{
     [self performSegueWithIdentifier:@"Profile" sender:sender];
 }
--(void)viewRequests:(id)sender {
+-(void)viewRequests:(id)sender
+{
    // [self performSegueWithIdentifier:@"Requests" sender:sender];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"!" message:@"under construction" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    [alert show];
 }
--(void)viewConversations:(id)sender {
-   // [self performSegueWithIdentifier:@"Conversations" sender:sender];
+-(IBAction)loadAlbums:(id)sender
+{
+    [self performSegueWithIdentifier:@"Albums" sender:sender];
+}
+-(void)viewConversations:(id)sender
+{
+   //[self performSegueWithIdentifier:@"Conversations" sender:sender];
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"!" message:@"under construction" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil];
+    [alert show];
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"feedForFriend"]) {
-        [segue.destinationViewController getTimelineForUser:@"ghita.mariuslucian"];
-    }
-    else if ([[segue identifier] isEqualToString:@"Likes"]) {
-        [segue.destinationViewController fetchMyData:@"Likes":_access_token];
-    }
-    else if ([[segue identifier] isEqualToString:@"Books"]) {
-        [segue.destinationViewController fetchMyData:@"Books":_access_token];
-    }
-    else if ([[segue identifier] isEqualToString:@"Music"]) {
-        [segue.destinationViewController fetchMyData:@"Music":_access_token];
-    }
-    else if ([[segue identifier] isEqualToString:@"Movies"]) {
-        [segue.destinationViewController fetchMyData:@"Movies":_access_token];
-    }
-    else if ([[segue identifier] isEqualToString:@"Friends"]) {
-        [segue.destinationViewController fetchMyData:@"Friends":_access_token];
-    }
-    else if ([[segue identifier] isEqualToString:@"Photos"]) {
-        [segue.destinationViewController fetchMyData:@"albums":_access_token];
+    switch ([sender tag]) {
+        case 0:
+            [segue.destinationViewController getTimelineForUser:@"ghita.mariuslucian"];
+            break;
+        case 1:
+            [segue.destinationViewController fetchMyData:@"Friends":_access_token];
+            break;
+        case 2:
+            [segue.destinationViewController fetchMyData:@"Books":_access_token];
+            break;
+        case 3:
+            [segue.destinationViewController fetchMyData:@"Likes":_access_token];
+            break;
+        case 4:
+            [segue.destinationViewController fetchMyData:@"Movies":_access_token];
+            break;
+        case 5:
+            [segue.destinationViewController getAlbumPhotos:_access_token];
+            break;
+        default:
+            NSLog(@"sender tag unknown");
+            break;
     }
 }
 @end
