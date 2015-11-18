@@ -10,31 +10,31 @@
 	<string>project2</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>957351D7-546A-4842-B302-052972799AB7</key>
-		<string>https://github.com/luci1329/personal.git</string>
+		<key>719F6050B8ECBBA175FAE579F106AEFB20479AC2</key>
+		<string>https://github.com/luci1329/fb_new.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>project2.xcodeproj/project.xcworkspace</string>
+	<string>project2.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>957351D7-546A-4842-B302-052972799AB7</key>
+		<key>719F6050B8ECBBA175FAE579F106AEFB20479AC2</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/luci1329/personal.git</string>
+	<string>https://github.com/luci1329/fb_new.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>957351D7-546A-4842-B302-052972799AB7</string>
+	<string>719F6050B8ECBBA175FAE579F106AEFB20479AC2</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>957351D7-546A-4842-B302-052972799AB7</string>
+			<string>719F6050B8ECBBA175FAE579F106AEFB20479AC2</string>
 			<key>IDESourceControlWCCName</key>
-			<string>project2</string>
+			<string>fb_new</string>
 		</dict>
 	</array>
 </dict>
